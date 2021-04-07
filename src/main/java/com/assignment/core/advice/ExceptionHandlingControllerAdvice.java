@@ -4,6 +4,7 @@ import com.assignment.core.enums.Status;
 import com.assignment.core.exception.BaseException;
 import com.assignment.core.exception.ConflictException;
 import com.assignment.core.exception.LimitExceededException;
+import com.assignment.core.exception.NotFoundException;
 import com.assignment.core.pojo.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -37,6 +38,12 @@ public class ExceptionHandlingControllerAdvice {
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     @ResponseBody
     public Response handleLimitExceededException(LimitExceededException e) {
+        return Response.getInstance(Status.FAILURE.getValue(), e.getMessage());
+    }
+    @ExceptionHandler(NotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public Response handleNotFoundException(NotFoundException e) {
         return Response.getInstance(Status.FAILURE.getValue(), e.getMessage());
     }
 }
