@@ -1,5 +1,6 @@
 package com.assignment.core.model;
 
+import com.datastax.driver.mapping.annotations.ClusteringColumn;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Data;
@@ -12,14 +13,16 @@ import javax.validation.constraints.NotNull;
 @Builder(toBuilder = true)
 @Table(value = "booking")
 public class Booking {
+
+    @NotNull
     @PrimaryKey
+    @Column
+    String flightNumber;
+
+    @ClusteringColumn
     @NotNull
     @Column
     String userName;
-
-    @NotNull
-    @Column
-    String flightNumber;
 
     @JsonIgnore
     @Column
